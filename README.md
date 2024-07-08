@@ -1,11 +1,11 @@
-# Sel_GNN
+# Sel_GCN
 
-This repository contains the supporting code for all the work that appears in the Sel_GNN paper. 
+This repository contains the supporting code for all the work that appears in the Sel_GCN paper. 
 
 ## Overview
 Since the advent of computer networking, packet routing decisions have been extensively explored in academia. In today's deep learning era, the incorporation of neural networks into various supervised and unsupervised learning tasks has been proven highly successful. Packet routing is no exception to this assertion. Packet routing shares a similar structure to many autonomous control theory problems (such as maintaining the flight of a drone) and hence Reinforcement learning (RL) and Deep Q networks have been used before to assist in increasing **throughput** and decreasing **latency**, like in [2] by Modi et.al. Furthermore, Graph Neural Networks (GNNs), specially designed neural networks designed to operate over graphs, have also shown dominance in the field because networks are, in their fundamental form, graphs. Jiang et.al. in [1] have combined these two machine learning mechanisms to produce DGN: Deep Graph Neural networks. 
 
-Our work is an extension of [1] and [2]. We implement Sel_GNN: An intelligent routing framework in multi-hop wireless networks. We complement the mentioned work by implementing selectivity at each agent using a distance heuristic to ensure that packets are routed even more efficiently, without circumnavigating/looping around the network. Our work is tested in a Jupyter notebook-based simulator. 
+Our work is an extension of [1] and [2]. We implement Sel_GCN: An intelligent routing framework in multi-hop wireless networks. We complement the mentioned work by implementing selectivity at each agent using a distance heuristic to ensure that packets are routed even more efficiently, without circumnavigating/looping around the network. Our work is tested in a Jupyter notebook-based simulator. 
 ***
 
 ## Table of hyperparameters used in the code 
@@ -37,8 +37,26 @@ Our work is an extension of [1] and [2]. We implement Sel_GNN: An intelligent ro
 
 ## Requirements
 1. Python 3.12.2 - This is the version used in the original work. You may choose to use an older version but please check for package version conflicts.
-2. All the packages listed in [dependencies.txt](https://github.com/HayagreevJ24/Sel_GCN/blob/main/Sel_GCN_Dependencies.txt)
-3. A CPU/GPU/TPU capable of training the models from scratch for several hours at a time, if you plan on doing so. (We do not recommend using a cloud computing platform like Google Colab unless you have a subscription that allows you to train models for >= 8 hours at a time as the kernel unexpectedly terminates otherwise.) We used a 12th Gen Intel® Core™ i5-12450H × 12 cores running Ubuntu 22.04.4 LTS, 64-bit, with 16 gibibytes of system memory. 
+2. All the packages listed in [dependencies.txt](https://github.com/NikitaKarthi/Sel_GCN/blob/main/Sel_GCN_Dependencies.txt)
+3. A CPU/GPU/TPU capable of training the models from scratch for several hours at a time, if you plan on doing so. (We do not recommend using a cloud computing platform like Google Colab unless you have a subscription that allows you to train models for >= 8 hours at a time as the kernel unexpectedly terminates otherwise.)
+
+## Specifications of our devices
+
+#### Device 1: Used for most of the training and evaluation, including the generation of [TTL, Latency, and K-Value Plots](https://github.com/NikitaKarthi/Sel_GCN/tree/main/Plots)
+| Specification | Value |
+| --- | --- |
+| CPU | 12th Gen Intel® Core™ i5-12450H × 12 cores | 
+| Memory | 16 GiB | 
+| OS | Ubuntu 22.04.4 LTS, 64 bit | 
+
+#### Device 2: Used for evaluation of [resource utilization](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0))
+| Specification | Value |
+| --- | --- |
+| CPU | 13th Gen Intel® Core™ i9-13900H × 14 cores | 
+| Memory | 16 GiB | 
+| GPU | NVIDIA GeForce RTX 4050 Laptop GPU | 
+| GPU Memory | 6.0 GiB |
+| OS | Windows 11 Home, 64 bit |
 
 Please use the following command to clone the repository and install the required packages: 
 ```bash
@@ -60,15 +78,24 @@ python3 jupyter notebook
    Contains the serialized pickle maps 0, 1, and 2.
 
 4. [Plots](https://github.com/NikitaKarthi/Sel_GCN/tree/main/Plots)<br>
-   Contains the plots produced from the code evidencing the performance of Sel_GNN.<br>
+   Contains the plots produced from the code evidencing the performance of Sel_GCN in terms of network routing performance.<br>
    (a) [Comparative Performance of Three Different Methods (Packets Received).png](https://github.com/NikitaKarthi/Sel_GCN/blob/main/Plots/Comparitive%20Performance%20of%20Three%20Different%20Methods%20(Packets%20Received).png) - Compares [1], [2], and Sel_GCN in terms of throughput (packets received on each map)<br>
    (b) [Comparative Performance of Three Different Methods (TTL).png](https://github.com/NikitaKarthi/Sel_GCN/blob/main/Plots/Comparitive%20Performance%20of%20Three%20Different%20Methods%20(TTL).png) - Compares [1], [2], and Sel_GCN in terms of latency (TTL of packets that arrive at the base station)<br>
    (c) [Performance of Sel_GCN based on Packets Received by the Base Station.png](https://github.com/NikitaKarthi/Sel_GCN/blob/main/Plots/Performance%20of%20Sel_GCN%20based%20on%20Packets%20Received%20by%20the%20Base%20Station.png) - Plot of number of packets received against the value of k for all 3 maps.<br>
    (d) [Performance of Sel_GCN based on TTL of Packets Received by the Base Station.png](https://github.com/NikitaKarthi/Sel_GCN/blob/main/Plots/Performance%20of%20Sel_GCN%20based%20on%20TTL%20of%20Packets%20Received%20by%20the%20Base%20Station.png) - Plot of incoming TTL of received packets against value of k for all 3 maps.<br>
    (e) [Results.ipynb](https://github.com/NikitaKarthi/Sel_GCN/blob/main/Plots/Results.ipynb) - Code used to produce and save all the plots.
 
-5. [results_GNN_10_10_0](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_0), [results_GNN_10_10_1](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_1), [results_GNN_10_10_2](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_2)<br>
-   Contain the log files, final and interim models (at different step numbers) as pytorch objects, arrays of packets received and TTL as pickle objects produced in (2) of this list. Compiled separately for each k value from 1 to 7.
+5. [Plots and Data - Resource Utilization (Map_0)](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0))
+   Contains the plots produced from the code evidencing the performance of Sel_GCN in terms of resource utilization.<br>
+   (a) [Comparison of the three methods (CPU Usage).png](https://github.com/HayagreevJ24/Sel_GCN/blob/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0)/Plots/Comparison%20of%20the%20three%20methods%20(CPU%20Usage).png) - Compares [1], [2], and Sel_GCN in terms of CPU usage on Map_0. The values are means of datapoints collected every 100 time steps.<br>
+   (b) [Comparison of the three methods (System and GPU Memory Usage).png](https://github.com/HayagreevJ24/Sel_GCN/blob/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0)/Plots/Comparison%20of%20the%20three%20methods%20(System%20and%20GPU%20Memory%20Usage).png) - Compares [1], [2], and Sel_GCN in terms of system and GPU memory usage. The values are calculated in the same way as CPU usage.<br>
+   (c) [Comparison of the three methods (runtime).png](https://github.com/HayagreevJ24/Sel_GCN/blob/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0)/Plots/Comparison%20of%20the%20three%20methods%20(runtime).png) - Compares the evaluation duration for [1], [2] and Sel_GCN.<br>
+   (d) [log-Scaled Comparison of the three methods (runtime).png](https://github.com/HayagreevJ24/Sel_GCN/blob/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0)/Plots/log-Scaled%20Comparison%20of%20the%20three%20methods%20(runtime).png) - Plot in (c) is logarithmized so that the bar for MAPR is seen more clearly.<br>
+   (e) [results_resource_utilization.ipynb](https://github.com/HayagreevJ24/Sel_GCN/blob/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0)/results_resource_utilization.ipynb) - Code used to produce and save all the plots.
+   
+
+7. [results_GNN_10_10_0](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_0), [results_GNN_10_10_1](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_1), [results_GNN_10_10_2](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_2)<br>
+   Contain the log files, final and interim models (at different step numbers) as pytorch objects, arrays of packets received and TTL as pickle objects produced in (2) of this list. Compiled separately for each k value from 0 to 7.
 
 
 ## References: 
