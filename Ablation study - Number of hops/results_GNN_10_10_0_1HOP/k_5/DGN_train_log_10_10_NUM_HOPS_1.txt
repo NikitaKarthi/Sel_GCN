@@ -1,0 +1,2180 @@
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+ep_num 0	step 100
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A1   |A7   |I[]  |A1   |A1   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A52  |X    |A4   |A45  |X    |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A7   |X    |A1   |A2   |A0   |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A9   |I[]  |A0   |A2   |A1   |A98  |A0   |A0   |
+------------------------------------------------------------
+|A0   |A1   |A8   |X    |A0   |A0   |A175 |A5   |A92  |I[]  |
+------------------------------------------------------------
+|X    |X    |A6   |I[]  |A51  |A33  |X    |A72  |X    |A1   |
+------------------------------------------------------------
+|A0   |A0   |A5   |A3   |A16  |A0   |A17  |X    |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A1   |A0   |A0   |A1   |A12  |A0   |B260 |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A1   |X    |A6   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 25.742574257425744	total packets received 260	total packets sent 1000	mean loss 	0.0
+################################################################# 
+
+
+ep_num 0	step 200
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A16  |I[]  |A9   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A89  |X    |A15  |A56  |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A2   |X    |A2   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A5   |I[]  |A0   |A1   |A0   |A186 |A3   |A0   |
+------------------------------------------------------------
+|A0   |A1   |A1   |X    |A0   |A1   |A376 |A2   |A211 |I[]  |
+------------------------------------------------------------
+|X    |X    |A9   |I[]  |A103 |A61  |X    |A155 |X    |A1   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A7   |A0   |A16  |A33  |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A1   |A0   |A1   |A1   |A82  |A0   |B553 |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A1   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 27.512437810945272	total packets received 553	total packets sent 2000	mean loss 	0.4140710765449562
+################################################################# 
+
+
+ep_num 0	step 300
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A15  |I[]  |A15  |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A23  |X    |A23  |A47  |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A66  |X    |A0   |A2   |A1   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A5   |A0   |A0   |A181 |A15  |A1   |
+------------------------------------------------------------
+|A0   |A1   |A4   |X    |A0   |A2   |A334 |A3   |A360 |I[]  |
+------------------------------------------------------------
+|X    |X    |A7   |I[]  |A19  |A122 |X    |A294 |X    |A3   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A6   |A0   |A23  |A61  |X    |A60  |A1   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A1   |A43  |A76  |A153 |A66  |B967 |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 32.12624584717608	total packets received 967	total packets sent 3000	mean loss 	0.5950806938928623
+################################################################# 
+
+
+ep_num 0	step 400
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+ep_num 0	step 100
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A1   |A7   |I[]  |A1   |A1   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A52  |X    |A4   |A45  |X    |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A7   |X    |A1   |A2   |A0   |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A9   |I[]  |A0   |A2   |A1   |A98  |A0   |A0   |
+------------------------------------------------------------
+|A0   |A1   |A8   |X    |A0   |A0   |A175 |A5   |A92  |I[]  |
+------------------------------------------------------------
+|X    |X    |A6   |I[]  |A51  |A33  |X    |A72  |X    |A1   |
+------------------------------------------------------------
+|A0   |A0   |A5   |A3   |A16  |A0   |A17  |X    |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A1   |A0   |A0   |A1   |A12  |A0   |B260 |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A1   |X    |A6   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 25.742574257425744	total packets received 260	total packets sent 1000	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+
+
+
+Set Reproducibility
+
+
+seed = 0
+random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+np.random.seed(seed)
+torch.cuda.manual_seed_all(seed)
+os.environ['PYTHONHASHSEED'] = str(seed)
+os.environ["CUBLAS_WORKSPACE_CONFIG"]=":4096:8"
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+2 hop network
+
+
+
+Model Architecture
+
+
+lr=0.001
+optimizer = optim.Adam(model_k_5.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+Final_Model(
+  (encoder): MLP(
+    (fc1): Linear(in_features=8, out_features=128, bias=True)
+    (fc2): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (m): MultiHeadsAttModel(
+    (v_linear): Linear(in_features=128, out_features=128, bias=True)
+    (q_linear): Linear(in_features=128, out_features=128, bias=True)
+    (k_linear): Linear(in_features=128, out_features=128, bias=True)
+    (out_linear): Linear(in_features=128, out_features=128, bias=True)
+  )
+  (q_net): Q_Net(
+    (concat): Linear(in_features=256, out_features=128, bias=True)
+    (output_layer): Linear(in_features=128, out_features=3, bias=True)
+    (softmax_layer): Softmax(dim=1)
+  )
+)
+
+
+
+Model Hyperparameters
+
+
+n 10
+m 10
+k 5
+neighbors 8
+def_ttl 1000
+iot_rate 20
+epsilon 0.3
+capacity 200000
+num_steps 2000
+iot_generate_time 10
+create_packets_till 400
+batch_size 8
+EP_NUM 0
+
+
+
+Model Training
+
+
+ep_num 0	step 0
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 0.0	total packets received 0	total packets sent 0	mean loss 	0.0
+################################################################# 
+
+
+ep_num 0	step 100
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A1   |A7   |I[]  |A1   |A1   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A52  |X    |A4   |A45  |X    |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A7   |X    |A1   |A2   |A0   |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A9   |I[]  |A0   |A2   |A1   |A98  |A0   |A0   |
+------------------------------------------------------------
+|A0   |A1   |A8   |X    |A0   |A0   |A175 |A5   |A92  |I[]  |
+------------------------------------------------------------
+|X    |X    |A6   |I[]  |A51  |A33  |X    |A72  |X    |A1   |
+------------------------------------------------------------
+|A0   |A0   |A5   |A3   |A16  |A0   |A17  |X    |A1   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A1   |A0   |A0   |A1   |A12  |A0   |B260 |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A1   |X    |A6   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 25.742574257425744	total packets received 260	total packets sent 1000	mean loss 	0.0
+################################################################# 
+
+
+ep_num 0	step 200
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A16  |I[]  |A9   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A89  |X    |A15  |A56  |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A2   |X    |A2   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A5   |I[]  |A0   |A1   |A0   |A186 |A3   |A0   |
+------------------------------------------------------------
+|A0   |A1   |A1   |X    |A0   |A1   |A376 |A2   |A211 |I[]  |
+------------------------------------------------------------
+|X    |X    |A9   |I[]  |A103 |A61  |X    |A155 |X    |A1   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A7   |A0   |A16  |A33  |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A1   |A0   |A1   |A1   |A82  |A0   |B553 |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A1   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 27.512437810945272	total packets received 553	total packets sent 2000	mean loss 	0.4140710854411718
+################################################################# 
+
+
+ep_num 0	step 300
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A15  |I[]  |A15  |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A23  |X    |A23  |A47  |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A66  |X    |A0   |A2   |A1   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A5   |A0   |A0   |A181 |A15  |A1   |
+------------------------------------------------------------
+|A0   |A1   |A4   |X    |A0   |A2   |A334 |A3   |A360 |I[]  |
+------------------------------------------------------------
+|X    |X    |A7   |I[]  |A19  |A122 |X    |A294 |X    |A3   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A6   |A0   |A23  |A61  |X    |A60  |A1   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A1   |A43  |A76  |A153 |A66  |B967 |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 32.12624584717608	total packets received 967	total packets sent 3000	mean loss 	0.595080708744518
+################################################################# 
+
+
+ep_num 0	step 400
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A21  |I[]  |A18  |A1   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A26  |A38  |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A5   |A66  |X    |A2   |A1   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A7   |I[]  |A9   |A2   |A1   |A153 |A28  |A18  |
+------------------------------------------------------------
+|A0   |A0   |A6   |X    |A10  |A88  |A321 |A154 |A387 |I[]  |
+------------------------------------------------------------
+|X    |X    |A8   |I[]  |A3   |A196 |X    |A272 |X    |A22  |
+------------------------------------------------------------
+|A0   |A0   |A2   |A11  |A30  |A151 |A168 |X    |A0   |A1   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A1   |A14  |A44  |A203 |A3   |B1486|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A20  |A3   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 37.057356608478806	total packets received 1486	total packets sent 4000	mean loss 	0.7226969559591012
+################################################################# 
+
+
+ep_num 0	step 500
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A108 |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A45  |A284 |A125 |A450 |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A206 |X    |A410 |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A74  |A196 |X    |A11  |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A23  |A281 |A65  |B1722|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 34.37125748502994	total packets received 1722	total packets sent 4000	mean loss 	0.8015594339656259
+################################################################# 
+
+
+ep_num 0	step 600
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A9   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A217 |A67  |A449 |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A151 |X    |A550 |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A214 |X    |A2   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A285 |A128 |B1928|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 32.079866888519135	total packets received 1928	total packets sent 4000	mean loss 	0.8337887967882458
+################################################################# 
+
+
+ep_num 0	step 700
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A141 |A0   |A381 |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A77  |X    |A636 |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A211 |X    |A19  |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A207 |A186 |B2142|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 30.556348074179745	total packets received 2142	total packets sent 4000	mean loss 	0.8506732418091593
+################################################################# 
+
+
+ep_num 0	step 800
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A55  |A1   |A298 |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A687 |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A189 |X    |A43  |A1   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A122 |A251 |B2353|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 29.37578027465668	total packets received 2353	total packets sent 4000	mean loss 	0.8584425874268369
+################################################################# 
+
+
+ep_num 0	step 900
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A220 |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A691 |X    |A1   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A114 |X    |A63  |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A35  |A308 |B2568|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 28.501664816870143	total packets received 2568	total packets sent 4000	mean loss 	0.8617459891506623
+################################################################# 
+
+
+ep_num 0	step 1000
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A135 |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A1   |X    |A635 |X    |A1   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A31  |X    |A48  |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A332 |B2817|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 28.14185814185814	total packets received 2817	total packets sent 4000	mean loss 	0.8609450137341297
+################################################################# 
+
+
+ep_num 0	step 1100
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A49  |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A121 |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A12  |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A228 |B3046|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward 4.005449591280654	total packets received 3046	total packets sent 4000	mean loss 	6.098062601985983
+################################################################# 
+
+
+ep_num 0	step 1200
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A131 |B3174|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -0.8825978351373855	total packets received 3174	total packets sent 4000	mean loss 	16.57849282388584
+################################################################# 
+
+
+ep_num 0	step 1300
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B3233|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -2.9362029208301306	total packets received 3233	total packets sent 4000	mean loss 	23.701964772750927
+################################################################# 
+
+
+ep_num 0	step 1400
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B3233|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -2.726623840114204	total packets received 3233	total packets sent 4000	mean loss 	28.666637640183183
+################################################################# 
+
+
+ep_num 0	step 1500
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B3233|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -2.5449700199866756	total packets received 3233	total packets sent 4000	mean loss 	34.54627403847223
+################################################################# 
+
+
+ep_num 0	step 1600
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B3233|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -2.386008744534666	total packets received 3233	total packets sent 4000	mean loss 	38.19604410393993
+################################################################# 
+
+
+ep_num 0	step 1700
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B3233|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -2.2457378012933567	total packets received 3233	total packets sent 4000	mean loss 	45.17228889085138
+################################################################# 
+
+
+ep_num 0	step 1800
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B3233|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -2.121043864519711	total packets received 3233	total packets sent 4000	mean loss 	48.24453075491988
+################################################################# 
+
+
+ep_num 0	step 1900
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B3233|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -2.0094687006838505	total packets received 3233	total packets sent 4000	mean loss 	47.755200910978196
+################################################################# 
+
+
+ep_num 0	step 1999
+Map 
+------------------------------------------------------------
+|A0   |X    |X    |A0   |A0   |I[]  |A0   |A0   |X    |X    |
+------------------------------------------------------------
+|A0   |A0   |X    |A0   |X    |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |I[]  |A0   |A0   |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |A0   |I[]  |
+------------------------------------------------------------
+|X    |X    |A0   |I[]  |A0   |A0   |X    |A0   |X    |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |X    |A0   |A0   |
+------------------------------------------------------------
+|A0   |A0   |A0   |A0   |A0   |A0   |A0   |A0   |B3233|A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |A0   |A0   |
+------------------------------------------------------------
+|A0   |X    |A0   |A0   |A0   |X    |A0   |A0   |I[]  |X    |
+------------------------------------------------------------
+
+
+mean score/reward -1.91	total packets received 3233	total packets sent 4000	mean loss 	50.14134409453347
+################################################################# 
+
+
+
+
+
+num_packets_received [2652]
+tot_packets_sent [4000]
+mean_ttl_received [713.5245098039215]
+rec_rate [{0: {'total_packets_rec_per_hop': 0.03, 'old_packets_in_network': 0}, 100: {'total_packets_rec_per_hop': 4.83, 'old_packets_in_network': 97}, 200: {'total_packets_rec_per_hop': 4.09, 'old_packets_in_network': 614}, 300: {'total_packets_rec_per_hop': 4.0, 'old_packets_in_network': 1205}, 400: {'total_packets_rec_per_hop': 3.97, 'old_packets_in_network': 1805}, 500: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 2308}, 600: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 2208}, 700: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 2108}, 800: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 2008}, 900: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 1908}, 1000: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 1808}, 1100: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 1708}, 1200: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 1608}, 1300: {'total_packets_rec_per_hop': 1.0, 'old_packets_in_network': 1508}, 1400: {'total_packets_rec_per_hop': 0.6, 'old_packets_in_network': 1408}, 1500: {'total_packets_rec_per_hop': 0.0, 'old_packets_in_network': 1348}, 1600: {'total_packets_rec_per_hop': 0.0, 'old_packets_in_network': 1348}, 1700: {'total_packets_rec_per_hop': 0.0, 'old_packets_in_network': 1348}, 1800: {'total_packets_rec_per_hop': 0.0, 'old_packets_in_network': 1348}, 1900: {'total_packets_rec_per_hop': 0.0, 'old_packets_in_network': 1348}, 1999: {'total_packets_rec_per_hop': 0.0, 'old_packets_in_network': 1348}}]
+Evaluation Metrics
+
+
+Duration  6770.517043590546
+RAM Memory Usage (in MB)  65
+NUM_HOPS is 1
