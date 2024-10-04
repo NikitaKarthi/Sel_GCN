@@ -49,7 +49,7 @@ Our work is an extension of [1] and [2]. We implement Sel_GCN: An intelligent ro
 | Memory | 16 GiB | 
 | OS | Ubuntu 22.04.4 LTS, 64 bit | 
 
-#### Device 2: Used for evaluation of [resource utilization](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0))
+#### Device 2: Used for evaluation of [resource utilization](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0)) and [Ablation study](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Ablation%20study%20-%20Number%20of%20hops)
 | Specification | Value |
 | --- | --- |
 | CPU | 13th Gen Intel® Core™ i9-13900H × 14 cores | 
@@ -96,6 +96,9 @@ python3 jupyter notebook
 
 7. [results_GNN_10_10_0](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_0), [results_GNN_10_10_1](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_1), [results_GNN_10_10_2](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_2)<br>
    Contain the log files, final and interim models (at different step numbers) as pytorch objects, arrays of packets received and TTL as pickle objects produced in (2) of this list. Compiled separately for each k value from 0 to 7.
+
+8. [Ablation study](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Ablation%20study%20-%20Number%20of%20hops)
+   A supplemental experiment where the number of hops for the message passing in GCN was varied and its effect on the runtime, mean TTL, and packet delivery was examined. 
 
 
 ## References: 
