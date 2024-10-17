@@ -1,0 +1,4 @@
+Evaluation duration: 5.578487396240234 s
+Memory Usage: 2613.153846153846 MiB
+Mean CPU Usage: 3.446153846153846 %
+GPU Memory usage: 84.92307692307692 MiB
