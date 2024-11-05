@@ -97,10 +97,6 @@ python3 jupyter notebook
 7. [results_GNN_10_10_0](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_0), [results_GNN_10_10_1](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_1), [results_GNN_10_10_2](https://github.com/NikitaKarthi/Sel_GCN/tree/main/results_GNN_10_10_2)<br>
    Contain the log files, final and interim models (at different step numbers) as pytorch objects, arrays of packets received and TTL as pickle objects produced in (2) of this list. Compiled separately for each k value from 0 to 7.
 
-8. [Ablation study](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Ablation%20study%20-%20Number%20of%20hops)
-   A supplemental experiment where the number of hops for the message passing in GCN was varied and its effect on the runtime, mean TTL, and packet delivery was examined. 
-
-
 ## References: 
 This code is based on
 - [1] https://github.com/PKU-RL/DGN - (Jiechuan Jiang, Chen Dun, Tiejun Huang, and Zongqing Lu. Graph convolutional reinforcement learning. ICLR'20)
