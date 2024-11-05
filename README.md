@@ -49,7 +49,7 @@ Our work is an extension of [1] and [2]. We implement Sel_GCN: An intelligent ro
 | Memory | 16 GiB | 
 | OS | Ubuntu 22.04.4 LTS, 64 bit | 
 
-#### Device 2: Used for evaluation of [resource utilization](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0)) and [Ablation study](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Ablation%20study%20-%20Number%20of%20hops)
+#### Device 2: Used for evaluation of [resource utilization](https://github.com/HayagreevJ24/Sel_GCN/tree/main/Plots%20and%20Data%20-%20Resource%20Utilization%20(Map_0))
 | Specification | Value |
 | --- | --- |
 | CPU | 13th Gen Intel® Core™ i9-13900H × 14 cores | 
